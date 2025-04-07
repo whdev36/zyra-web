@@ -8,15 +8,19 @@ def home(request):
 
 # Login user
 def login_user(request):
+    username = ''
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            messages.success(request, 'You have successfully logged in.')
-            next_page = request.GET.get('next', 'home')
-            return redirect(next_page)
+            if not user.is_active:
+                messages.error(request, 'This account is inactive.', extra_tags='danger')
+            else:
+                login(request, user)
+                messages.success(request, 'You have successfully logged in.')
+                next_page = request.GET.get('next', 'home')
+                return redirect(next_page)
         else:
-            messages.warning(request, 'Check your username or password!')
-    return render(request, 'main/login.html', {})
+            messages.error(request, 'Invalid username or password', extra_tags='danger')
+    return render(request, 'main/login.html', {'username': username})
