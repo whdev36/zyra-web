@@ -1,4 +1,4 @@
-# import os
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -108,7 +108,21 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
+# Media files (Images, Files, etc.)
+# https://github.com/whdev36/django-tutorial/blob/main/config/settings.py
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Authentication configuration
+# https://github.com/whdev36/django-tutorial/blob/main/config/settings.py
+
+AUTH_USER_MODEL = 'main.User'
+LOGIN_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = ''
